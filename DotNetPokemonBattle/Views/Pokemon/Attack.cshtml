@@ -1,0 +1,46 @@
+﻿@model DotNetPokemonBattle.Models.Pokemon
+ 
+@* @{
+    ViewData["Title"] = "Index";
+
+    var p1 = ViewBag.P1;
+    var p2 = ViewBag.P2;
+} *@
+
+<h1>Mini Pokemon Battle </h1>
+
+<div>
+    <h3> @Model.Player.Name</h3>
+    <p>
+        HP: @Model.Player.HP
+    </p>
+</div>
+
+<div>
+    <h3>@Model.Enemy.Name</h3>
+    <p>HP: @Model.Enemy.HP</p>
+</div>
+
+@if (Model.Player.HP <= 0)
+{
+    <p>You lost!</p>
+}
+else if (Model.Enemy.HP <= 0)
+{
+    <p>You won!</p>
+}
+else if (Model.IsPlayerTurn)
+{
+    <form asp-action="Attack" method="post">
+        @foreach (var move in Model.Player.Moves)
+        {
+            <button type="submit" name="moveName" value="@move.Name">@move.Name</button>
+        }
+    </form>
+}
+else
+{
+    <form asp-action="Attack" method="post">
+        <button type="submit">Enemy's Turn</button>
+    </form>
+}

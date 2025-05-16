@@ -1,0 +1,52 @@
+﻿@model DotNetPokemonBattle.Models.Pokemon
+
+@{
+    var p1 = ViewBag.P1;
+    var p2 = ViewBag.P2;
+    var winner = ViewBag.Winner as string;
+}
+
+<h1>Mini Pokémon Battle</h1>
+
+@if (!string.IsNullOrEmpty(winner))
+{
+    <h2 style="color:green;">🏆 @winner</h2>
+}
+else
+{
+    <h3>Take your turn!</h3>
+}
+<div style="display:flex; justify-content:space-around;">
+    <div>
+        <h3>@p1.Name</h3>
+        <p>HP: @p1.HP</p>
+        <form method="post" asp-controller="Pokemon" asp-action="Index">
+            <input type="hidden" name="attacker" value="Pikachu" />
+            <input type="hidden" name="p1HP" value="@p1.HP" />
+            <input type="hidden" name="p2HP" value="@p2.HP" />
+            <button type="value">Pikachu Attacks</button>
+        </form>
+    </div>
+
+    <div>
+        <h3>@p2.Name</h3>
+        <p>HP: @p2.HP</p>
+        <form method="post" asp-controller="Pokemon" asp-action="Index">
+            <input type="hidden" name="attacker" value="Charmander" />
+            <input type="hidden" name="p1HP" value="@p1.HP" />
+            <input type="hidden" name="p2HP" value="@p2.HP" />
+            <button type="value">Charmander Attacks</button>
+        </form>
+    </div>
+</div>
+
+<div class="btn btn-warning" style="border: 2px solid black; border-radius: 10px; padding: 10px;">
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<form asp-controller="Pokemon" asp-action="Reset" method="post">
+    <button type="submit" class="btn btn-primary" style="margin-top:20px;">Restart Battle</button>
+</form>
+
+
